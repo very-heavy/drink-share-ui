@@ -31,19 +31,30 @@ const App = () => {
     />
   )
 
+  const sendDrink = (drink) => {
+    console.log('送ったるやん: ', drink)
+    axios
+    .post('http://localhost:3001/drinks', drink)
+    // .post('http://localhost:3001/drinks', drink)
+    .then(response => {
+      console.log(response)
+      setDrinks(drinks.concat(drink))
+    })
+  }
+
   const add = (event) => {
     event.preventDefault()
     const drinkObject = {
       id: drinks.length + 1,
       name: newName,
-      price: newPrice,
-      rate: newRate,
+      price: Number(newPrice),
+      rate: Number(newRate),
       place: newPlace,
       category: newCategory,
       memo: newMemo
     }
-    console.log('送ったるやん: ', drinks.length)
-    setDrinks(drinks.concat(drinkObject))
+    sendDrink(drinkObject)
+    // setDrinks(drinks.concat(drinkObject)) // もしputで全部更新をするならこっち
     setNewName("")
     setNewPrice("")
     setNewRate("")
